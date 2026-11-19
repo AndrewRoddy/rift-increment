@@ -1,0 +1,5 @@
+name    = "rift-increment"
+version = "0.1.0"
+
+[plugin]
+entry = "init.lua"
