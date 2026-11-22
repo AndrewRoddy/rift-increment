@@ -11,12 +11,11 @@
 -- `:Increment 5` or `:Decrement 5` instead.
 local M = {}
 
--- rift.replace_lines also eats the newline after the range, and it takes
--- two undos. So put that newline back, and in Normal mode do the edit
--- inside a quick trip to Insert mode so a single `u` undoes it.
+-- rift.replace_lines takes two undos (it deletes, then inserts), so from
+-- Normal mode the edit goes inside a quick trip to Insert mode and a
+-- single `u` undoes it.
 local function set_lines(s, e, lines)
   local out = { table.unpack(lines) }
-  if #out > 0 and e < rift.get_line_count() then out[#out + 1] = "" end
   local wrap = rift.get_mode() == "normal"
   if wrap then rift.exec_action("mode:insert") end
   rift.replace_lines(s, e, out)
